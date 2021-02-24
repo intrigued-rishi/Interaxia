@@ -1,0 +1,17 @@
+const mongoose = require('mongoose');
+
+
+
+const db = mongoose.connect('mongodb://localhost:27017/SocialMedia',{useNewUrlParser:true,useUnifiedTopology:true}).then(
+    function() {
+        console.log("Connected to database!");
+    }
+).catch(
+    function(err){
+        console.log("Error while connecting to DB",err);
+    }
+);
+
+
+
+module.exports = mongoose;
