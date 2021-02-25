@@ -40,6 +40,15 @@
     <p><%= profile_user.name %></p>
     <p><%= profile_user.email %></p>
 <%} %>
+<div>
+    <% if(locals.user && locals.user.id != profile_user.id){ %>
+        <% if(friend){ %>
+            <a href="/friends/remove/<%= profile_user.id %>">Remove Friend</a>
+        <% }else{ %>
+            <a href="/friends/add/<%= profile_user.id %>">Add Friend</a>
+        <% } %>    
+    <% } %>    
+</div>
 </main>
 <%- include('_footer') %>
 

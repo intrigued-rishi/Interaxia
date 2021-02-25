@@ -4,10 +4,15 @@ const path = require('path');
 
 // let's keep it same as before
 module.exports.profile = function(req, res){
+    let friend=false;
+    if(req.isAuthenticated()){
+        friend = req.user.friends.includes(req.params.id);
+    }
     User.findById(req.params.id, function(err, user){
         return res.render('user_profile', {
             title: 'User Profile',
-            profile_user: user
+            profile_user: user,
+            friend:friend
         });
     });
 
