@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <title>WeChAt</title>
+    <link rel="stylesheet" href="/css/chatBox.css">
+</head>
+<body>
+    <div id="chat-wrapper">
+        <div id="body-chat"></div>
+        <div id="send">
+            <input id="mssg-form" type="text" name="mssg"><button id="mssg-send">Send</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.2/socket.io.js"></script>
+    <script src="/js/chatFrontend.js"></script>
+    <script>
+            <% if(locals.user){ %>
+                new Chat('body-chat','<%=locals.user.email%>','<%= locals.toUser %>');
+            <% } %>    
+    </script>
+</body>
+</html>

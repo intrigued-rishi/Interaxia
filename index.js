@@ -40,6 +40,9 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+const ServerGawd = require('http').Server(app);
+require('./config/chatBackend').chatSockets(ServerGawd);
+
 // mongo store is used to store the session cookie in the db
 app.use(session({
     name: 'codeial',
@@ -64,7 +67,7 @@ app.use(customMware.setFlash);
 app.use('/', require('./routes'));
 
 
-app.listen(port, function(err){
+ServerGawd.listen(port, function(err){
     if (err){
         console.log(`Error in running the server: ${err}`);
     }

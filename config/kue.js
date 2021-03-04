@@ -4,11 +4,10 @@ const queue = kue.createQueue();
 
 const friendMailer = require('../mailers/friend_mailer');
 
-queue.process('emails', async function(job, done){
+queue.process('emails', function(job, done){
     
-    friendMailer.mail(job.data);    
+    friendMailer.mail(job.data,done);    
 
-    done();
 });
 
 module.exports = queue;

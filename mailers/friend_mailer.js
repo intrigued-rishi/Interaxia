@@ -1,7 +1,7 @@
 const nodemailer = require('../config/nodemailer');
 const path = require('path');
 
-module.exports.mail = (data)=>{
+module.exports.mail = (data,done)=>{
     let body = nodemailer.renderTemplate({user:data.user},'/friend.ejs');
     nodemailer.transporter.sendMail({
         from:'rishikeshcrever@gmail.com',
@@ -21,5 +21,6 @@ module.exports.mail = (data)=>{
             return;
         }
         console.log(info.response);
+        done();
     });
 }

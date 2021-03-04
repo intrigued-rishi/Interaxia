@@ -50,6 +50,9 @@
     <% } %>    
 </div>
 </main>
+<% if(locals.user && friend){ %>
+   <a href="/message/friend/<%= profile_user.email %>">Chat</a>
+<% } %>
 <%- include('_footer') %>
 
 

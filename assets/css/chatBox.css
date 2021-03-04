@@ -1,0 +1,19 @@
+#chat-wrapper {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  overflow-y: scroll;
+  width: 30vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column; }
+  #chat-wrapper #body-chat {
+    height: 90%;
+    background-color: burlywood; }
+  #chat-wrapper #send {
+    height: 10%;
+    display: flex; }
+    #chat-wrapper #send input {
+      width: 70%; }
+    #chat-wrapper #send button {
+      width: 30%; }
