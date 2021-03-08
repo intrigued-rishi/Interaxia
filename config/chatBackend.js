@@ -13,7 +13,10 @@ module.exports.chatSockets=function(server){
             else
                 res=s1+s2;    
             socket.join(res);
-            socket.broadcast.to(res).emit('new_person',{message:"Other Person joined the chat!"})
+            socket.broadcast.to(res).emit('new_person',{message:"Other Person joined the chat!"});
+            socket.on('new_mssg',function(data){
+                io.in(res).emit('get_mssg',data);
+            });
         });
     });
 }

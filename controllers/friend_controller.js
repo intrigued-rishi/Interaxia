@@ -12,7 +12,7 @@ module.exports.add = async function(req,res){
         if(err){
             console.log("Error in queueing in mail!");
             return;
-        }  
+        }
     });
     return res.redirect(`/users/profile/${req.params.id}`);
 }

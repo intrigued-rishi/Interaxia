@@ -7,14 +7,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <title>WeChAt</title>
     <link rel="stylesheet" href="/css/chatBox.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
+    <%- include('_header'); %>
+    <h1 id="chat-name"><%= name %></h1>
     <div id="chat-wrapper">
-        <div id="body-chat"></div>
+        <div id="body-chat">
+            <% if(locals.messages){ %>
+                <% for(m of messages){ %>
+                    <% if(m.from==locals.user.email){ %>
+                        <p class="self-mssg"><%= m.content %></p>
+                    <% } %>   
+                    <% if(m.from!=locals.user.email){ %>
+                        <p class="other-mssg">
+                            <small><%= name %></small>
+                            <%= m.content %>
+                        </p>
+                    <% } %>    
+                <% } %>    
+            <% } %>    
+        </div>
         <div id="send">
             <input id="mssg-form" type="text" name="mssg"><button id="mssg-send">Send</button>
         </div>
     </div>
+    <%- include('_footer'); %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.2/socket.io.js"></script>
     <script src="/js/chatFrontend.js"></script>
     <script>
