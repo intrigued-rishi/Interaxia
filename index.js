@@ -1,8 +1,10 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
+require('./config/view-helpers')(app);
 const port = 8000;
 const db = require('./config/mongoose');
+const path = require('path');
 // used for session cookie
 const session = require('express-session');
 const passport = require('passport');
@@ -10,31 +12,36 @@ const passportLocal = require('./config/passport-local-strategy');
 const passportJWT = require('./config/passport-jwt-strategy');
 const passportGoogle = require('./config/passport-google-oauth2-strategy');
 
+const logger = require('morgan');
+
 const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 
+const env = require('./config/environment');
+const mongoConnect = require('connect-mongo');
 
-
-app.use(sassMiddleware({
-    src: './assets/scss',
-    dest: './assets/css',
-    debug: true,
-    outputStyle: 'extended',
-    prefix: '/css'
-}));
+if(env.name=='development'){
+    app.use(sassMiddleware({
+        src: path.join(env.statics,'scss'),
+        dest: path.join(env.statics,'css'),
+        debug: true,
+        outputStyle: 'extended',
+        prefix: '/css'
+    }));
+}
 app.use(express.urlencoded());
 
 app.use(cookieParser());
 
-app.use(express.static('./assets'));
+app.use(express.static(path.join(__dirname,env.statics)));
 // make the uploads path available to the browser
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
 // extract style and scripts from sub pages into the layout
 
 
-
+app.use(logger(env.morgan.type,env.morgan.options));
 
 // set up the view engine
 app.set('view engine', 'ejs');
@@ -47,12 +54,13 @@ require('./config/chatBackend').chatSockets(ServerGawd);
 app.use(session({
     name: 'codeial',
     // TODO change the secret before deployment in production mode
-    secret: 'blahsomething',
+    secret: env.session_secret,
     saveUninitialized: false,
     resave: false,
     cookie: {
-        maxAge: (1000 * 60 * 100)
-    }
+        maxAge: (1000 * 60 * 1)
+    },
+    store:mongoConnect.create({mongoUrl:'mongodb://localhost:27017/SocialMedia'})
 }));
 
 app.use(passport.initialize());

@@ -17,7 +17,6 @@ module.exports.home = async function(req, res){
                 select: 'name'
             }
         });
-    
         let users = await User.find({});
         let friends = null;
         if(req.isAuthenticated()){
