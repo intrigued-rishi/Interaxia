@@ -15,7 +15,7 @@
   "keywords": [
     "social"
   ],
-  "author": "CodingNinjas",
+  "author": "Hrishikesh Mallick",
   "license": "ISC",
   "dependencies": {
     "connect-flash": "^0.1.1",

@@ -30,7 +30,7 @@ if(env.name=='development'){
         prefix: '/css'
     }));
 }
-app.use(express.urlencoded());
+app.use(express.urlencoded({extends:false}));
 
 app.use(cookieParser());
 
@@ -58,7 +58,7 @@ app.use(session({
     saveUninitialized: false,
     resave: false,
     cookie: {
-        maxAge: (1000 * 60 * 1)
+        maxAge: (1000 * 60 * 10)
     },
     store:mongoConnect.create({mongoUrl:'mongodb://localhost:27017/SocialMedia'})
 }));

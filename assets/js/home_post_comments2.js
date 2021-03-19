@@ -36,18 +36,23 @@ for(let i=0;i<$('.post-comments-submit').length;i++){
 function newCommentDom(comment){
     // I've added a class 'delete-comment-button' to the delete comment link and also id to the comment's li
     return $(`<li id="comment-${ comment._id }">
-                    <p>
-                        
-                        <small>
-                            <a class="delete-comment-button" href="/comments/destroy/${comment._id}">X</a>
-                        </small>
-                        
-                        ${comment.content}
-                        <br>
-                        <small>
-                            ${comment.user.name}
-                        </small>
-                    </p>    
+            <p>
+                
+                <small class="comment-author">
+                    ${ comment.user.name }
+                </small>
+                <br>
+                ${comment.content}
+                
+                    <small>
+                        <a class="delete-comment-button" href="/comments/destroy/${ comment.id }" me><i class="fas fa-trash-alt" style="color: red;"></i></a>
+                    </small>
+                <br>
+                
+                <a href="/likes/toggle?id=${comment._id}&type=Comment" class="like" data-value="${comment._id}"><i class="far fa-thumbs-up"></i></a><span id="${comment._id}">${ comment.likes.length }</span>
+                
+            
+            </p>    
 
-            </li>`);
+    </li>`);
 }
