@@ -22,8 +22,8 @@ let development = {
         port: 587,
         secure: false,
         auth: {
-            user: 'rishikeshcrever@gmail.com',
-            pass: 'Losblancos7$'
+            user: 'youremail',
+            pass: 'yourpassword'
         },
         tls:{
             rejectUnauthorized:false
