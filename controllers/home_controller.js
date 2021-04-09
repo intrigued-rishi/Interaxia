@@ -24,7 +24,7 @@ module.exports.home = async function(req, res){
             friends = user.friends;
         }
         return res.render('home', {
-            title: "Codeial | Home",
+            title: "Interaxia",
             posts:  posts,
             all_users: users,
             friends:friends
