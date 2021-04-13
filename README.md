@@ -1,4 +1,4 @@
-# SocialMedia
+# Interaxia
 A primitive social media website that lets an user post, comment, like(both comment and post), add friend and chat with the user's friends!! 
 
 A Node JS Application which allows registered users to interact among themselves by creating posts, commenting on the posts, liking on posts/comments, adding friends among the registered users. They can also (Live)chat with their friends
