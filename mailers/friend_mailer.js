@@ -3,6 +3,10 @@ const path = require('path');
 
 module.exports.mail = (data,done)=>{
     let body = nodemailer.renderTemplate({user:data.user},'/friend.ejs');
+    let path_temp=path.join(__dirname,'..','uploads/users/avatars/avatar-1614153064668');
+    if(data.user.avatar){
+        path_temp=path.join(__dirname,'..',data.user.avatar);
+    }
     nodemailer.transporter.sendMail({
         from:'rishikeshcrever@gmail.com',
         to:data.to,
@@ -11,7 +15,7 @@ module.exports.mail = (data,done)=>{
         attachments:[
             {
                 filename:'avatar.jpg',
-                path:path.join(__dirname,'..',data.user.avatar)
+                path:path_temp
 
             }
         ]

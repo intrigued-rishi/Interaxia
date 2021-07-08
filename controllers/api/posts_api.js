@@ -1,5 +1,7 @@
 const Post = require('../../models/post');
 const Comment = require('../../models/comment');
+const Like = require('../../models/like');
+
 module.exports.index = async function(req, res){
 
 
@@ -8,15 +10,15 @@ module.exports.index = async function(req, res){
         .populate('user')
         .populate({
             path: 'comments',
-            populate: {
-                path: 'user'
-            }
+            // populate: {
+            //     path: 'user'
+            // }
         });
 
-    return res.json(200, {
+    return res.status(200).json({
         message: "List of posts",
         posts: posts
-    })
+    });
 }
 
 
@@ -26,24 +28,28 @@ module.exports.destroy = async function(req, res){
         let post = await Post.findById(req.params.id);
 
         if (post.user == req.user.id){
-            post.remove();
 
+            comment = post.comments;
             await Comment.deleteMany({post: req.params.id});
 
+            await Like.deleteMany( { likable:{ $in:comment } } );
 
+            await Like.deleteOne({likeable:post._id});
+
+            post.remove();
     
-            return res.json(200, {
+            return res.status(200).json({
                 message: "Post and associated comments deleted successfully!"
             });
         }else{
-            return res.json(401, {
+            return res.status(403).json( {
                 message: "You cannot delete this post!"
             });
         }
 
     }catch(err){
         console.log('********', err);
-        return res.json(500, {
+        return res.status(500).json( {
             message: "Internal Server Error"
         });
     }

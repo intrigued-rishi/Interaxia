@@ -10,10 +10,10 @@ const fs = require('fs');
 const path = require('path');
 
 gulp.task('css',function(done){
-    gulp.src('./assets/**/*.scss')
+    gulp.src('./assets/scss/*.scss')
     .pipe(sass())
     .pipe(cssnano())
-    .pipe(gulp.dest('./assets/css'));
+    .pipe(gulp.dest('./assets/css/'));
 
     gulp.src('./assets/**/*.css')
     .pipe(rev())

@@ -21,15 +21,15 @@ const customMware = require('./config/middleware');
 const env = require('./config/environment');
 const mongoConnect = require('connect-mongo');
 
-if(env.name=='development'){
-    app.use(sassMiddleware({
-        src: path.join(env.statics,'scss'),
-        dest: path.join(env.statics,'css'),
-        debug: true,
-        outputStyle: 'extended',
-        prefix: '/css'
-    }));
-}
+// if(env.name=='development'){
+//     app.use(sassMiddleware({
+//         src: path.join(env.statics,'scss'),
+//         dest: path.join(env.statics,'css'),
+//         debug: true,
+//         outputStyle: 'expanded',
+//         prefix: '/css'
+//     }));
+// }
 app.use(express.urlencoded({extends:false}));
 
 app.use(cookieParser());

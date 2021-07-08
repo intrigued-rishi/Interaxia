@@ -14,7 +14,7 @@ const accessLogstream = rfs.createStream('access.log', {
 let development = {
     name:'development',
     session_secret:'halamadrid',
-    statics: '/assets',
+    statics: '/public/assets/',
     db:'SocialMedia',
     mailerConfig:{
         service: 'gmail',
@@ -71,4 +71,4 @@ let production = {
     }        
 }
 
-module.exports=production;
+module.exports=development;
