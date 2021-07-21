@@ -10,8 +10,11 @@ queue.process('emails', function(job, done){
 
 });
 
-queue.process('messages', function(job,data){
-    Message.create(job.data);
+queue.process('messages', function(job,done){
+    Message.create(job.data,function(err,mssg){
+        if(err)return done(err);
+        done();
+    });
 });
 
 module.exports = queue;

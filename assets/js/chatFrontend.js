@@ -32,13 +32,14 @@ class Chat{
         $('#mssg-send').on('click',function(){
             let val = $('#mssg-form').val();
             self.socket.emit('new_mssg',{val:val,email:self.userMail});
+            console.log(this);
             $('#mssg-form').val("");
             $.ajax({
                 type: "POST",
                 url: "/message/save",
                 data:{val:val,par:participants},
                 success: function (response) {
-                    console.log(response);
+                    console.log(response.message);
                 }
             });
         });

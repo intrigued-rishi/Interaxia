@@ -27,10 +27,10 @@ module.exports.toggleLike = async function(req, res){
 
         // if a like already exists then delete it
         if (existingLike){
-            likeable.likes.pull(existingLike._id);
-            likeable.save();
+            await likeable.likes.pull(existingLike._id);
+            await likeable.save();
 
-            existingLike.remove();
+            await existingLike.remove();
             deleted = true;
 
         }else{
@@ -42,8 +42,8 @@ module.exports.toggleLike = async function(req, res){
                 onModel: req.query.type
             });
 
-            likeable.likes.push(newLike._id);
-            likeable.save();
+            await likeable.likes.push(newLike._id);
+            await likeable.save();
 
         }
 
@@ -58,7 +58,7 @@ module.exports.toggleLike = async function(req, res){
 
     }catch(err){
         console.log(err);
-        return res.json(500, {
+        return res.status(500).json( {
             message: 'Internal Server Error, while creating like'
         });
     }
