@@ -22,26 +22,24 @@ class Chat{
         this.socket.on('get_mssg',function(data){
             let item;
             let val = data.val;
-            console.log(val);
-            if(val.startsWith("https"))
-                val=`<img src="${val}" class="img">`
-            console.log(val);
-            if(data.email==self.userMail){
-                item = $(`<p>${val}</p>`);
-                item.addClass('self-mssg');
-            }else{
+            if(data.mode=='global')return alert(val);
+            setTimeout(function(){
+                if(val.startsWith("https"))
+                    val=`<img src="${val}" class="img">`;
                 let name = $('#chat-name').text();
                 item = $(`<p><small>${name}</small>${val}</p>`);
                 item.addClass('other-mssg');
-            }
-            $('#body-chat').append(item);
+            
+                $('#body-chat').append(item);
+            },1000);
+            
         });
         var participants = {from:this.userMail,to:this.otherUser};
         $('#mssg-send').on('click',function(){
             let val = $('#mssg-form').val();
             let type=0;
             $('#mssg-form').val("");
-            if(document.getElementById('mssg-img').files[0]){
+            if(val===""){
                 type=1;
                 let formData = new FormData();
                 formData.append('file',document.getElementById('mssg-img').files[0]);
@@ -54,17 +52,28 @@ class Chat{
                 })
                 .then(res =>{
                     val=res.data.secure_url;
-                    self.socket.emit('new_mssg',{val:val,email:self.userMail});
                     $.ajax({
                         type: "POST",
                         url: "/message/save",
                         data:{val:val,par:participants,type},
                         success: function (response) {
                             console.log(response.message);
+                            val=`<img src="${val}" class="img">`;
+                            let item = $(`<p>${val}</p>`);
+                            item.addClass('self-mssg');
+                            $('#body-chat').append(item);
+                            self.socket.emit('new_mssg',{val:val,email:self.userMail});
                         }
                     });
                 })
-                return;
+            }else{
+
+                self.socket.emit('new_mssg',{val:val,email:self.userMail});
+                if(val.startsWith('*')&&val.endsWith('*'))
+                    return alert(val);
+                let item = $(`<p>${val}</p>`);
+                item.addClass('self-mssg');
+                $('#body-chat').append(item);
             }
             $.ajax({
                 type: "POST",

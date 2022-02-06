@@ -15,7 +15,10 @@ module.exports.chatSockets=function(server){
             socket.join(res);
             socket.broadcast.to(res).emit('new_person',{message:"Other Person joined the chat!"});
             socket.on('new_mssg',function(data){
-                io.in(res).emit('get_mssg',data);
+                let val=data.val;
+                if(val.startsWith("*")&&val.startsWith("*"))
+                    return socket.broadcast.emit('get_mssg',{mode:'global',val});
+                socket.broadcast.to(res).emit('get_mssg',data);
             });
         });
     });

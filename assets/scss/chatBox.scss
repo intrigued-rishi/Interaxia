@@ -51,16 +51,23 @@ body{
                 line-height:  0.5em;;
             }
         }
+        .img{
+            width: 100%;
+        }
     }
     #send{
         height:10%;
         display: flex;
-        input{
-            width:70%;
+        #mssg-form{
+            width:60%;
             background-color:darkseagreen;
         }
+        #mssg-img{
+            width:20%;
+            background-color:cadetblue;
+        }
         button{
-            width:30%;
+            width:20%;
         }
     }
 }

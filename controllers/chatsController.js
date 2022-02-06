@@ -18,7 +18,8 @@ module.exports.save= async function(req,res){
         let mssg = {
             from:req.body.par.from,
             to:req.body.par.to,
-            content:req.body.val
+            content:req.body.val,
+            type:req.body.type
         };
         queue.create('messages',mssg).save((err)=>{
             if(err){

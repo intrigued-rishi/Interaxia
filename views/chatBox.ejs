@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<%= locals.assetPath('css/chatBox.css') %>">
     <link rel="stylesheet" href="<%= locals.assetPath('css/header.css') %>">
     <link rel="stylesheet" href="<%= locals.assetPath('css/footer.css') %>">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <%- include('_header'); %>
@@ -19,19 +20,29 @@
             <% if(locals.messages){ %>
                 <% for(m of messages){ %>
                     <% if(m.from==locals.user.email){ %>
-                        <p class="self-mssg"><%= m.content %></p>
+                        <p class="self-mssg">
+                            <% if(m.type&&m.type==1){ %>
+                                <img src="<%= m.content %>" class="img" alt="">
+                            <% }else{ %>
+                                <%= m.content %>
+                            <% } %>
+                        </p>
                     <% } %>   
                     <% if(m.from!=locals.user.email){ %>
                         <p class="other-mssg">
                             <small><%= name %></small>
-                            <%= m.content %>
+                            <% if(m.type&&m.type==1){ %>
+                                <img src="<%= m.content %>" class="img" alt="">
+                            <% }else{ %>
+                                <%= m.content %>
+                            <% } %>
                         </p>
                     <% } %>    
                 <% } %>    
             <% } %>    
         </div>
         <div id="send">
-            <input id="mssg-form" type="text" name="mssg"><button id="mssg-send">Send</button>
+            <input id="mssg-form" type="text" name="mssg"><input id="mssg-img" type="file"><button id="mssg-send">Send</button>
         </div>
     </div>
     <%- include('_footer'); %>
